@@ -1,0 +1,5 @@
+numpy
+scipy
+trimesh
+torch
+open3d
