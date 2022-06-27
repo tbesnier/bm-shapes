@@ -4,24 +4,8 @@ import trimesh as tri
 import matplotlib.pyplot as plt
 import pyssht
 
+import plotting
 
-def plot_mesh(mesh: tri.Trimesh, title: str = "Mesh"):
-    fig = plt.figure(figsize=(12,12))
-    ax = fig.add_subplot(122, projection='3d')
-    ax.plot_trisurf(mesh.vertices[:, 0], mesh.vertices[:,1], triangles=mesh.faces, Z=mesh.vertices[:,2])
-    ax.set_title(title)
-    plt.show()
-
-def plot_coords(x_coords: np.array, y_coords: np.array, z_coords: np.array, title: str = "Coords"):
-    fig = plt.figure(figsize=(12,12))
-    ax = fig.add_subplot(121, projection='3d')
-    ax.scatter(x_coords, y_coords, z_coords)
-    ax.set_title(title)
-    plt.show()
-
-def plot_polar(r: np.ndarray, theta: np.array, phi: np.array, title= "Polar"):
-    xyz = pyssht.spherical_to_cart(r, theta, phi)
-    plot_coords(xyz[0], xyz[1], xyz[2], title)
 
 def compute_coefficients(f_1, f_2, f_3, lat, lon, lmax=10):
     """Given a function f: S^2 -> R^3, takes a list of samples of the function f(lat, lon) = (f_1, f_2, f_3) 
@@ -82,14 +66,14 @@ if __name__ == "__main__":
     (x, y, z) = pyssht.spherical_to_cart(r_noisy, lat_noisy, lon_noisy)
 
 
-    plot_coords(sphere.cartesian_coords[:, 0], sphere.cartesian_coords[:, 1], sphere.cartesian_coords[:, 2], title="Original")
-    plot_coords(x_recon, y_recon, z_recon, title="Reconstructed cart")
-    plot_polar(r= r_recon, phi=lat_recon, theta=lon_recon, title="Reconstructed polar")
-    plot_coords(x, y, z, "With Noise")
+    plotting.plot_coords(sphere.cartesian_coords[:, 0], sphere.cartesian_coords[:, 1], sphere.cartesian_coords[:, 2], title="Original")
+    plotting.plot_coords(x_recon, y_recon, z_recon, title="Reconstructed cart")
+    plotting.plot_polar(r= r_recon, phi=lat_recon, theta=lon_recon, title="Reconstructed polar")
+    plotting.plot_coords(x, y, z, "With Noise")
 
     recon_mesh = tri.Trimesh(vertices=np.stack((x, y, z), -1), faces=sphere.mesh.faces)
 
  #   mesh_recons = tri.convex.convex_hull(np.array([x_coord_recons, y_coord_recons, z_coord_recons]).T)
 
 
-    plot_mesh(recon_mesh)
+    plotting.plot_mesh(recon_mesh)
