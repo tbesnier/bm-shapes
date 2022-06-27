@@ -1,6 +1,6 @@
 import numpy as np
 
-from examples import plotting
+from utils import plotting
 
 def test_plot_coords():
     x = [1]
