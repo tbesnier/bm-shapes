@@ -1,10 +1,9 @@
 import pyshtools as pysh
 import numpy as np
 import trimesh as tri
-import matplotlib.pyplot as plt
 import pyssht
 
-import plotting
+from utils import plotting
 
 
 def compute_coefficients(f_1, f_2, f_3, lat, lon, lmax=10):
