@@ -22,7 +22,9 @@ def plot_coords(x_coords: np.array, y_coords: np.array, z_coords: np.array, titl
     ax.set_ylabel('Y Label')
     ax.set_zlabel('Z Label')
     plt.show()
+    return fig
 
 def plot_polar(r: np.ndarray, theta: np.array, phi: np.array, title= "Polar"):
     xyz = pyssht.spherical_to_cart(r, theta, phi)
     plot_coords(xyz[0], xyz[1], xyz[2], title)
+

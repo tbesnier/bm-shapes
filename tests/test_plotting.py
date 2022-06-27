@@ -1,3 +1,5 @@
+import numpy as np
+
 from examples import plotting
 
 def test_plot_coords():
@@ -7,4 +9,8 @@ def test_plot_coords():
     plotting.plot_coords(x, y, z)
 
 def test_plot_polar():
-    pass
+    # Should give x=y=0, z=1
+    lat = np.asarray([0])
+    lon = np.asarray([0])
+    r = np.asarray([1])
+    plotting.plot_polar(r=r, phi=lat, theta=lon)
