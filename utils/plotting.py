@@ -24,7 +24,17 @@ def plot_coords(x_coords: np.array, y_coords: np.array, z_coords: np.array, titl
     plt.show()
     return fig
 
-def plot_polar(r: np.ndarray, theta: np.array, phi: np.array, title= "Polar"):
-    xyz = pyssht.spherical_to_cart(r, theta, phi)
-    plot_coords(xyz[0], xyz[1], xyz[2], title)
+def plot_polar_rad(r: np.ndarray, lats: np.array, lons: np.array, title= "Polar"):
+    x, y, z = polar_to_cartesian(r, lats, lons)
+    plot_coords(x, y, z, title)
+    return x, y, z
 
+def plot_polar_deg(r: np.ndarray, lats: np.array, lons: np.array, title= "Polar"):
+    lats_rad, lons_rad = np.deg2rad(lats), np.deg2rad(lons)
+    return plot_polar_rad(r, lats_rad, lons_rad)
+
+def polar_to_cartesian(radius, latitudes, longitudes):
+    x = radius*np.cos(latitudes)*np.sin(longitudes)
+    y = radius*np.sin(latitudes)*np.sin(longitudes)
+    z = radius*np.cos(longitudes)
+    return x, y, z
