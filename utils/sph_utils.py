@@ -47,15 +47,6 @@ class SphHarmBasis():
         #options={'limit':50}
         res = integrate.dblquad(integrand, 0., np.pi, lambda x:0., lambda x:2*np.pi)[0]
         return res
-    
-    def sph_harm_coeff_exp(self, Y, img_f, d_theta, d_phi):
-        """Compute spherical harmonic coefficients"""
-        def integrand(phi, theta):
-            return f(theta, phi) * Y(theta, phi) * np.sin(theta)
-        
-        res = integrate.romb(integrand, 0., np.pi, lambda x:0., lambda x:2*np.pi)[0]
-        
-        return res
 
     def sph_harm_transform(self, f, basis=None):
         """Get spherical harmonic coefficients for a function in a basis"""
@@ -90,14 +81,14 @@ class SphHarmBasis():
             
         return(np.array(paths))
     
-    def sph_harm_reconstruct_bridge(self, coeffs_source, coeffs_target, t, theta, phi, n_step = 2, basis=None):
+    def sph_harm_reconstruct_bridge(self, coeffs_source, coeffs_target, t, theta, phi, n_step = 2, eta = 1, basis=None):
         """Reconstruct a function from basis and corresponding coefficients"""
         if basis is None:
             basis = self.basis
             
         vec = np.vstack((coeffs_source, coeffs_target))
         
-        b = np.array([brownian_motion.Bridge(vec[0,i], vec[1,i]).gen_traj(n_step = n_step, T = t) for i in range(len(coeffs_source))])
+        b = np.array([brownian_motion.Bridge(vec[0,i], vec[1,i]).gen_traj(eta = eta, n_step = n_step, T = t) for i in range(len(coeffs_source))])
         coeffs_stoch = b
         
         paths = []
