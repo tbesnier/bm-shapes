@@ -88,7 +88,44 @@ class Bridge():
         for n in six.moves.range(n_step - 2):                                          
             t = n * dt
             xi = (np.random.randn(1) * dt_sqrt * eta)
-            B[n + 1] = B[n] + ((self.x1 - B[n])/ (1 - t))*dt + xi
+            B[n + 1] = B[n] + ((self.x1 - B[n])/ (T - t))*dt + xi
         B[-1] = self.x1  
+        
+        return B
+    
+class Diffusion_process():
+    """
+    A Diffusion process class constructor
+    """
+    def __init__(self, b, sigma, x0=0):
+        """
+        Init class
+        """
+        #assert (type(x0)==float or type(x0)==int or x0 is None), "Expect a float or None for the initial value"
+        #assert (type(x1)==float or type(x1)==int or x1 is None), "Expect a float or None for the initial value"
+        
+        self.b = b ### drift term
+        self.sigma = sigma ### diffusion term
+        self.x0 = float(x0)
+    
+    def gen_traj(self, eta=1, n_step = 50, T = 1.0):
+        """
+        Generate motion by drawing from the Normal distribution
+        
+        Arguments:
+            n_step: Number of steps
+            
+        Returns:
+            A NumPy array with `n_steps` points
+        """
+        
+        dt = T / (n_step-1)                                                        
+        dt_sqrt = np.sqrt(dt)
+        B = np.empty(n_step, dtype=np.float32)
+        B[0] = self.x0
+        for n in six.moves.range(n_step - 1):                                          
+            t = n * dt
+            xi = (np.random.randn(1) * dt_sqrt * eta)
+            B[n + 1] = B[n] + self.b(t, B[n])*dt + self.sigma(t, B[n])*xi
         
         return B

@@ -116,7 +116,7 @@ def varifold_dist(M1, M2):
     dist = loss(p0, q0)
     return dist
 
-def create_gif(list_data, file_name):
+def create_gif(list_data, file_dir, file_name, auto_scale = True):
     filenames = []
     listpq = list_data
     steps = []
@@ -128,6 +128,8 @@ def create_gif(list_data, file_name):
     for i in range(listpq.shape[0]):
         steps.append(listpq[i,:,:].T[rows_unique[1]])
     steps = np.array(steps)
+    if not auto_scale:
+        scale = np.max(steps[-1].max(0)-steps[-1].min(0))
     
     for i in range(len(listpq)):
 
@@ -169,7 +171,10 @@ def create_gif(list_data, file_name):
         #V = np.array([it[:,0], it[:,1], it[:,2]]).T
         F = np.array([faces[:,0], faces[:,1], faces[:,2]]).T
 
-        V = (V-(V.max(0)+V.min(0))/2) / max(V.max(0)-V.min(0))
+        if auto_scale:
+            V = (V-(V.max(0)+V.min(0))/2)/max(V.max(0)-V.min(0))
+        else:
+            V = (V-(V.max(0)+V.min(0))/2)/scale
         MVP = perspective(25,1,1,100) @ translate(0,0,-3.5) @ xrotate(120) @ yrotate(180) @ zrotate(-20)
         V = np.c_[V, np.ones(len(V))]  @ MVP.T
         V /= V[:,3].reshape(-1,1)
@@ -198,8 +203,11 @@ def create_gif(list_data, file_name):
         # save frame
         plt.savefig(filename)
         plt.close()# build gif
+        
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
     
-    with imageio.get_writer(file_name, mode='I') as writer:
+    with imageio.get_writer(os.path.join(file_dir,file_name), mode='I') as writer:
         for filename in filenames:
             image = imageio.imread(filename)
             writer.append_data(image)
