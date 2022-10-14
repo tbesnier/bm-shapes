@@ -201,16 +201,17 @@ def create_gif(list_data, file_dir, file_name, auto_scale = True):
                     filenames.append(filename)
     
         # save frame
-        plt.savefig(filename)
+        plt.savefig(filename, transparent=True)
         plt.close()# build gif
         
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)
-    
-    with imageio.get_writer(os.path.join(file_dir,file_name), mode='I') as writer:
-        for filename in filenames:
-            image = imageio.imread(filename)
-            writer.append_data(image)
+        
+    images = []
+    for filename in filenames:
+        image = imageio.v3.imread(filename, plugin="pillow")
+        images.append(image)
+    imageio.v3.imwrite(os.path.join(file_dir,file_name), images, plugin="pillow", mode="RGBA", transparency=0, loop=0, disposal=2)
         
     # Remove files
     for filename in set(filenames):
