@@ -29,7 +29,7 @@ The code involves the following libraries:
 Please cite this paper in your work.
 
 ## Contacts
---------
+
     Elizabeth Louise Baker: elba@di.ku.dk
 
     Thomas Besnier: thomas.besnier@univ-lille.fr
