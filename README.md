@@ -18,4 +18,20 @@ The code involves the following libraries:
 
 ## References
 
+    @misc{alias,
+      author  = {Baker, Besnier, Sommer},
+      title   = {title},  
+      url = {link},
+      publisher = {arXiv},  
+      year = {2022},
+    }
+
+Please cite this paper in your work.
+
 ## Contacts
+--------
+    Elizabeth Louise Baker: elba@di.ku.dk
+
+    Thomas Besnier: thomas.besnier@univ-lille.fr
+
+    Stefan Sommer: sommer@di.ku.dk
