@@ -12,9 +12,12 @@ This Python package aims at computing and visualizing implicit stochastic diffus
 ## Setup and dependencies
 
 The code involves the following libraries:
-- 
--
--
+- numpy
+- scipy
+- trimesh
+- open3d
+- imageio
+- matplotlib
 
 ## References
 
