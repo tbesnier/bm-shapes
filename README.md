@@ -4,8 +4,8 @@ We describe 2-dimensional shapes in the euclidean space $\mathbb{R}^3$ as elemen
 
 
 <p align="center">
-  <img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process/Q_identity_49coeffs.gif" alt="animated_sphere" style="width:50%"/>
-  <img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process_bunny/Q_identity_25coeffs.gif" alt="animated_bunny" style="width:50%"/>
+  <img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process/Q_identity_49coeffs.gif" alt="animated_sphere" style="width:100%"/>
+  <img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process_bunny/Q_identity_25coeffs.gif" alt="animated_bunny" style="width:100%"/>
 </p>
   
 ## Description
