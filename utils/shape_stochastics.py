@@ -70,9 +70,38 @@ def compute_wiener_process(x, y, z, theta, phi, Q, n = 25, t=1, n_step = 10, mak
         
     listpq = np.array(listpq)
     
-    mesh_processing.create_gif(listpq, file_dir, file_name, auto_scale = True)
+    if make_gif==True:
+        mesh_processing.create_gif(listpq, file_dir, file_name, auto_scale = True)
     
     return(listpq)
+
+def compute_wiener_process_shape(x_mesh, y_mesh, z_mesh, faces, Q, n = 25, t=1, n_step=10, make_gif=True,                                  file_dir = "tests/wiener_process_shape", file_name = "test.gif"):
+    
+    (r_shape, theta_shape, phi_shape) = pyssht.cart_to_spherical(x_mesh, y_mesh, z_mesh)
+    r_shape_proj = np.divide(r_shape, r_shape)
+    #x_mesh_proj, y_mesh_proj, z_mesh_proj = pyssht.spherical_to_cart(r_shape_proj, theta_shape, phi_shape)
+    
+    def sphere_function_x(theta, phi):
+        return np.sin(theta)*np.cos(phi)
+    def sphere_function_y(theta, phi):
+        return np.sin(theta)*np.sin(phi)
+    def sphere_function_z(theta, phi):
+        return np.cos(theta)
+    
+    sphere_process = compute_wiener_process(sphere_function_x, sphere_function_y, sphere_function_z,
+                                         theta = theta_shape, phi = phi_shape, Q = Q, n = n, t=t, n_step=n_step, make_gif = False)
+    
+    shape_process = []
+    for step in sphere_process:
+        (r, theta_shape, phi_shape) = pyssht.cart_to_spherical(step[0], step[1], step[2])
+        r_new = r - np.ones(r.shape) + r_shape
+        (x_shape, y_shape, z_shape) = pyssht.spherical_to_cart(r_new, theta_shape, phi_shape)
+        shape_process.append([x_shape, y_shape, z_shape])
+    shape_process = np.array(shape_process)
+    
+    mesh_processing.create_gif_shape(list_data = shape_process, faces=faces, file_dir=file_dir, file_name=file_name, auto_scale = True)
+    
+    return(shape_process)
 
 
 def compute_simplebridge(x0, y0, z0, x1, y1, z1, theta, phi, Q, n = 25, t=1, n_step = 10, make_gif = True,
