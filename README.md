@@ -2,8 +2,10 @@
 
 We describe 2-dimensional shapes in the euclidean space $\mathbb{R}^3$ as elements of $H^2(\mathbb{S}^2, \mathbb{R}^3)$ and so, deformations of the sphere with extra regularity constraints. This approach was popularized by Bauer et al. (ref).
 
+
 <p align="center">
-<img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process/Q_identity_49coeffs.gif" alt="animated" />
+  <img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process/Q_identity_49coeffs.gif" alt="animated_sphere" style="width:100%"/>
+  <img src="https://github.com/tbesnier/bm-shapes/blob/main/examples/tests/wiener_process_bunny/Q_identity_25coeffs.gif" alt="animated_bunny" style="width:100%"/>
 </p>
   
 ## Description
