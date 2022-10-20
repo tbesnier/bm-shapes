@@ -75,7 +75,7 @@ def compute_wiener_process(x, y, z, theta, phi, Q, n = 25, t=1, n_step = 10, mak
     
     return(listpq)
 
-def compute_wiener_process_shape(x_mesh, y_mesh, z_mesh, faces, Q, n = 25, t=1, n_step=10, make_gif=True,                                  file_dir = "tests/wiener_process_shape", file_name = "test.gif"):
+def compute_wiener_process_shape(x_mesh, y_mesh, z_mesh, faces, Q, n = 25, t=1, n_step=10, make_gif=True,                                  file_dir = "tests/wiener_process_shape", file_name = "test.gif", x_view=20, y_view=20, z_view=-10):
     
     (r_shape, theta_shape, phi_shape) = pyssht.cart_to_spherical(x_mesh, y_mesh, z_mesh)
     r_shape_proj = np.divide(r_shape, r_shape)
@@ -99,7 +99,8 @@ def compute_wiener_process_shape(x_mesh, y_mesh, z_mesh, faces, Q, n = 25, t=1, 
         shape_process.append([x_shape, y_shape, z_shape])
     shape_process = np.array(shape_process)
     
-    mesh_processing.create_gif_shape(list_data = shape_process, faces=faces, file_dir=file_dir, file_name=file_name, auto_scale = True)
+    if make_gif==True:
+        mesh_processing.create_gif_shape(list_data = shape_process, faces=faces, file_dir=file_dir, file_name=file_name, x_view=x_view,                                                  y_view=y_view, z_view=z_view, auto_scale = True)
     
     return(shape_process)
 
