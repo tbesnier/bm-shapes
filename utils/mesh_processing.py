@@ -281,7 +281,7 @@ def create_gif_shape(list_data, faces, file_dir, file_name, x_view=20, y_view=20
         Z = -V[:,:,2].mean(axis=1)
         zmin, zmax = Z.min(), Z.max()
         Z = (Z-zmin)/(zmax-zmin)
-        C = plt.get_cmap("magma")(Z)
+        C = plt.get_cmap("magma")(Z) #magma viridis ocean
         I = np.argsort(Z)
         T, C = T[I,:], C[I,:]
         fig = plt.figure(figsize=(6,6))
