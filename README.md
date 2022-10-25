@@ -1,6 +1,6 @@
 # Stochastic diffusions in H2 Sobolev spaces
 
-We describe 2-dimensional shapes in the euclidean space $\mathbb{R}^3$ as elements of $H^2(\mathbb{S}^2, \mathbb{R}^3)$ and so, deformations of the sphere with extra regularity constraints. This approach was popularized by Bauer et al. (ref).
+We describe 2-dimensional shapes in the euclidean space $\mathbb{R}^3$ as elements of $H^2(\mathbb{S}^2, \mathbb{R}^3)$ and so, deformations of the sphere with extra regularity constraints. This approach is particularly inspired by Bauer et al. (2022) and Vialard (2013).
 
 
 <p align="center">
