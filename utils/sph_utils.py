@@ -98,17 +98,17 @@ class SphHarmBasis():
             
         return(np.array(paths), b)
     
-    def sph_harm_reconstruct_sde(self, coeffs_source, t, theta, phi, Q, b, sigma, n_step = 2, basis=None):
+    def sph_harm_reconstruct_sde(self, coeffs_source, Q, t, theta, phi, b, sigma, n_step = 2, basis=None):
         """Reconstruct a function from basis and corresponding coefficients"""
         if basis is None:
             basis = self.basis
         
-        b = np.array([brownian_motion.Diffusion_process(b, sigma, coeffs_source[i]).gen_traj(eta = Q[i,i], n_step = n_step, T = t) for i in range(len(coeffs_source))])
-        coeffs_stoch = b
+        s = np.array([brownian_motion.Diffusion_process(b, sigma, coeffs_source[i]).gen_traj(eta = Q[i,i], n_step = n_step, T = t) for i in range(len(coeffs_source))])
+        coeffs_stoch = s
         
         paths = []
         for it in range(coeffs_stoch.shape[1]):
             
             paths.append(np.dot(coeffs_stoch[:,it], [f(theta, phi) for f in basis]))
             
-        return(np.array(paths), b)
+        return(np.array(paths), s)
