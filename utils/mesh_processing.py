@@ -1,9 +1,6 @@
 import numpy as np
-from scipy.io import loadmat
-from scipy.io import savemat
 import os
 import open3d as o3d
-import copy
 import trimesh as tri
 import torch
 import sys

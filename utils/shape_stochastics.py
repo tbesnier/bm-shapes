@@ -1,21 +1,13 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.special import sph_harm
-from scipy.integrate import quad, dblquad
-
 import numpy as np
 import trimesh as tri
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 import sys
-import os
-import six
 
 sys.path.insert(0,"../")
+from utils import sph_utils, mesh_processing
+
 import pyssht
 
-from utils import brownian_motion, sph_utils, mesh_processing
 
 def make_grid(N):
     sphere = tri.creation.uv_sphere(count=[N, N])
