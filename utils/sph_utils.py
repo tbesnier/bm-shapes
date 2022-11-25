@@ -112,3 +112,18 @@ class SphHarmBasis():
             paths.append(np.dot(coeffs_stoch[:,it], [f(theta, phi) for f in basis]))
             
         return(np.array(paths), s)
+    
+    def sph_harm_reconstruct_fractional(self, coeffs, Q, t, theta, phi, H, n_step = 2, basis=None):
+        """Reconstruct a function from basis and corresponding coefficients"""
+        if basis is None:
+            basis = self.basis
+        
+        b = np.array([brownian_motion.Fractional_BM(H,0).davies_harte(n_step = n_step, T = t) for coeff in coeffs])
+        coeffs_stoch = np.array([coeffs for i in range(n_step)]).T + Q.dot(b)
+        
+        paths = []
+        for it in range(coeffs_stoch.shape[1]):
+            
+            paths.append(np.dot(coeffs_stoch[:,it], [f(theta, phi) for f in basis]))
+            
+        return(np.array(paths))

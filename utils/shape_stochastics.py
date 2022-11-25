@@ -206,4 +206,43 @@ def compute_simplebridge(x0, y0, z0, x1, y1, z1, theta, phi, Q, n = 25, t=1, n_s
     mesh_processing.create_gif(listpq, file_dir, file_name, auto_scale = False)
     
     return(listpq)
+
+
+def compute_fractional_process(x, y, z, theta, phi, Q, H, n = 25, t=1, n_step = 10, make_gif = True, file_dir = "tests", file_name = "test.gif"):
+    
+    """Compute Q-Wiener process on the spherical harmonic basis of a shape defined by (x,y,z) triplet of functions from the sphere
+
+    Input: 
+        - x,y,z: functions from the sphere (theta, phi)
+        - n: resolution of the spherical harmonic decomposition (has to be squared number) [int]
+        - t: end time of the process [float]
+        - Q: Covariance matrix [n x n array]
+        - n_step: number of steps of the process [int]
+        - make_gif: tell if we want to output a gif file showing the process [Boolean]
+    Output:
+        - listpq: list of shape coordinates during the process [n_step x 3 x n array]
+    """
+    
+    basis = sph_utils.SphHarmBasis(n_coeffs=n)
+
+    coeffs_x = basis.sph_harm_transform(x)
+    coeffs_y = basis.sph_harm_transform(y)
+    coeffs_z = basis.sph_harm_transform(z)
+    
+    reconstr_stoch_x = basis.sph_harm_reconstruct_fractional(coeffs_x, Q, t, theta = theta, phi = phi, H = H, n_step = n_step)
+    reconstr_stoch_y = basis.sph_harm_reconstruct_fractional(coeffs_y, Q, t, theta = theta, phi = phi, H = H, n_step = n_step)
+    reconstr_stoch_z = basis.sph_harm_reconstruct_fractional(coeffs_z, Q, t, theta = theta, phi = phi, H = H, n_step = n_step)
+    
+    listpq = []
+    
+    for t in range(reconstr_stoch_x.shape[0]):
+        (x_coord_stoch, y_coord_stoch, z_coord_stoch) = reconstr_stoch_x[t], reconstr_stoch_y[t], reconstr_stoch_z[t]
+        listpq.append([x_coord_stoch, y_coord_stoch, z_coord_stoch])
+        
+    listpq = np.array(listpq)
+    
+    if make_gif==True:
+        mesh_processing.create_gif(listpq, file_dir, file_name, auto_scale = True)
+    
+    return(listpq)
     
