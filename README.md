@@ -20,6 +20,7 @@ The code involves the following libraries:
 - open3d
 - imageio
 - matplotlib
+- pyssht
 
 ## References
 

@@ -5,7 +5,6 @@ import trimesh as tri
 import torch
 import sys
 sys.path.insert(0,"../")
-from utils import lddmm_utils
 import imageio
 from matplotlib.collections import PolyCollection
 import matplotlib.pyplot as plt
@@ -72,46 +71,6 @@ def export_mesh(V, F, file_name):
     output_file.write(result)
     output_file.close()
     
-    
-def varifold_dist(M1, M2):
-    """
-    Compute varifold distance btw mesh at path M1 and mesh at path M2
-    """
-    
-    # torch type and device
-    use_cuda = torch.cuda.is_available()
-    torchdeviceId = torch.device("cuda:0") if use_cuda else "cpu"
-    torchdtype = torch.float32
-
-    # PyKeOps counterpart
-    KeOpsdeviceId = torchdeviceId.index  # id of Gpu device (in case Gpu is  used)
-    KeOpsdtype = torchdtype.__str__().split(".")[1]  # 'float32'
-    
-    def get_data(file):
-        if type(file)==str:
-            mesh = o3d.io.read_triangle_mesh(file)
-        else:
-            mesh = file
-        V, F, Rho = getDataFromMesh(mesh)
-        return(V,F,Rho)
-    
-    V1, F1, Rho1 = get_data(M1)
-    V2, F2, Rho2 = get_data(M2)
-    print(F2)
-    
-    q0 = torch.from_numpy(V1).clone().detach().to(dtype=torchdtype, device=torchdeviceId).requires_grad_(True)
-    VT = torch.from_numpy(V2).clone().detach().to(dtype=torchdtype, device=torchdeviceId)
-    FS = torch.from_numpy(F1).clone().detach().to(dtype=torch.long, device=torchdeviceId)
-    FT = torch.from_numpy(F2).clone().detach().to(dtype=torch.long, device=torchdeviceId)
-    sigma = torch.tensor([10], dtype=torchdtype, device=torchdeviceId)
-    
-    p0 = torch.zeros(q0.shape, dtype=torchdtype, device=torchdeviceId, requires_grad=True)
-    dataloss = lddmm_utils.lossVarifoldSurf(FS, VT, FT, lddmm_utils.GaussLinKernel(sigma=sigma))
-    Kv = lddmm_utils.GaussKernel(sigma=sigma)
-    loss = lddmm_utils.LDDMMloss(Kv, dataloss)
-
-    dist = loss(p0, q0)
-    return dist
 
 def create_gif(list_data, file_dir, file_name, auto_scale = True):
     filenames = []
