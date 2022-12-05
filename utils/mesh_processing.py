@@ -79,7 +79,7 @@ def create_gif(list_data, file_dir, file_name, auto_scale = True):
     #setting up the faces for the mesh
     rows_unique = np.unique(listpq[0,:,:].T, axis=0, return_index=True)
     new = listpq[0,:,:].T[rows_unique[1]]
-    hull = tri.convex.convex_hull(new, qhull_options='QbB')
+    hull = tri.convex.convex_hull(new, qhull_options='QbB Pp Qt QJ')
     faces = hull.faces
     for i in range(listpq.shape[0]):
         steps.append(listpq[i,:,:].T[rows_unique[1]])
