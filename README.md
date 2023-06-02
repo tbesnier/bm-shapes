@@ -24,12 +24,16 @@ The code involves the following libraries:
 
 ## References
 
-    @misc{alias,
-      author  = {Baker, Besnier, Sommer},
-      title   = {title},  
-      url = {link},
-      publisher = {arXiv},  
-      year = {2022},
+    @InProceedings{10.1007/978-3-031-31438-4_19,
+    author="Baker, Elizabeth
+    and Besnier, Thomas
+    and Sommer, Stefan",
+    title="A Function Space Perspective on Stochastic Shape Evolution",
+    booktitle="Image Analysis",
+    year="2023",
+    publisher="Springer Nature Switzerland",
+    pages="278--292",
+    abstract="Modelling randomness in shape data, for example, the evolution of shapes of organisms in biology, requires stochastic models of shapes. This paper presents a new       stochastic shape model based on a description of shapes as functions in a Sobolev space. Using an explicit orthonormal basis as a reference frame for the noise, the model is     independent of the parameterisation of the mesh. We define the stochastic model, explore its properties, and illustrate examples of stochastic shape evolutions using the         resulting numerical framework."
     }
 
 Please cite this paper if you use it in your work.
